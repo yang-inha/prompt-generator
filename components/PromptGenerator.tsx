@@ -60,8 +60,9 @@ export default function PromptGenerator() {
 
       {finalPrompt && (
         <div className="mt-6 border rounded p-4 bg-gray-100">
-          <p className="text-sm text-gray-600 mb-2">🎯 생성된 프롬프트:</p>
-          <textarea value={finalPrompt} readOnly className="w-full p-2 mb-2" rows={10} />
+          <p className="text-sm text-black dark:text-white mb-2">🎯 생성된 프롬프트:</p>
+          <textarea value={finalPrompt} readOnly className="w-full p-2 mb-2 text-black dark:text-white" rows={10} />
+
           <button
             onClick={copyToClipboard}
             className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700"
