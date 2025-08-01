@@ -28,7 +28,7 @@ export default function PromptGenerator() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">🧠 고급 프롬프트 생성기 (Gemini)</h1>
+      <h1 className="text-2xl font-bold mb-4">🧠 레벨업 프롬프트 생성기</h1>
       <textarea
         placeholder="원하는 작업을 입력하세요 (예: 유튜브 영상 제목 생성 프롬프트)"
         value={userInput}
