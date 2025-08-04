@@ -29,16 +29,16 @@ export default function PromptGenerator() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">🧠 레벨업 프롬프트 생성기</h1>
-      <p className="text-sm text-gray-600 mt-2">
-<strong>이 프롬프트는 프롬프트 초보자를 위한 것입니다</strong>
+      <p className="text-sm text-gray-600">
+<strong>이 프롬프트는 프롬프트 초보자를 위한 것입니다.</strong>
 </p>
-<p className="text-sm text-gray-600 mt-1">
+<p className="text-sm text-gray-600">
 이 프롬프트에 당신이 생각한 대략적인 지시문을 작성해보세요.
 </p>
-<p className="text-sm text-gray-600 mt-1">
+<p className="text-sm text-gray-600">
 그럼 전문적인 프롬프트를 제시해 줄 겁니다.
 </p>
-<p className="text-sm text-gray-600 mt-1">
+<p className="text-sm text-gray-600">
 제시한 프롬프트를 복사해서 챗지피티, 제미나이, 클로드 등에 활용하시면 됩니다.
 </p>
       <textarea
