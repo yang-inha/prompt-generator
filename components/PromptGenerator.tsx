@@ -6,7 +6,15 @@ export default function PromptGenerator() {
   const [clarificationAnswer, setClarificationAnswer] = useState("");
   const [finalPrompt, setFinalPrompt] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(finalPrompt);
+      alert('📋 클립보드에 복사되었습니다!');
+    } catch (err) {
+      console.error('복사 실패:', err);
+      alert('복사에 실패했습니다.');
+    }
+  };
   const generatePrompt = async () => {
     setLoading(true);
     const response = await fetch("/api/generate", {
