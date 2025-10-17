@@ -19,12 +19,7 @@ export default function PromptGenerator() {
     setFinalPrompt(data.finalPrompt || "");
     setLoading(false);
   };
-const displayText =
-  finalPrompt?.trim()
-    ? finalPrompt
-    : clarifyingQuestion?.trim()
-    ? `🤔 추가 질문: ${clarifyingQuestion}`
-    : "응답이 없습니다";
+
 
   return (
     <div className="max-w-2xl mx-auto p-4">
