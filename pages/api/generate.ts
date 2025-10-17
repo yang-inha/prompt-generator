@@ -108,14 +108,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       finalPrompt: text
     });
 
-  } catch (error: unknown) {
+} catch (error) {
     console.error("❌ 예외 발생:", error);
-    console.error("❌ 에러 메시지:", error.message);
-    console.error("❌ 에러 스택:", error.stack);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error("❌ 에러 메시지:", errorMessage);
+    console.error("❌ 에러 스택:", errorStack);
     
     return res.status(500).json({
       clarifyingQuestion: "",
-      finalPrompt: `오류 발생: ${error.message || "알 수 없는 오류"}`
+      finalPrompt: `오류 발생: ${errorMessage}`
     });
   }
 }
