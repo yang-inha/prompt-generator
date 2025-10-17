@@ -1,8 +1,7 @@
 // pages/api/generate.ts
-
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.ANTHROPIC_API_KEY;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -16,36 +15,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     : userInput;
 
   try {
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
+    const claudeResponse = await fetch(
+      "https://api.anthropic.com/v1/messages",
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-api-key": apiKey || "",
+          "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
-          contents: [
+          model: "claude-3-5-sonnet-20241022",
+          max_tokens: 2048,
+          messages: [
             {
               role: "user",
-              parts: [{ text: `다음 요청을 가장 전문적인 프롬프트로 만들어줘: ${prompt}` }]
-            }
-          ]
-        })
+              content: `당신은 프롬프트 엔지니어링 전문가입니다. 사용자의 요청을 분석하고 더 효과적인 프롬프트로 개선해주세요.
+
+사용자 요청: ${prompt}
+
+다음 형식으로 응답해주세요:
+1. 명확하고 구체적인 프롬프트
+2. 목표와 맥락이 잘 드러나도록
+3. AI가 이해하기 쉽게 구조화
+
+개선된 프롬프트만 작성해주세요.`,
+            },
+          ],
+        }),
       }
     );
 
-    const result = await geminiResponse.json();
-    console.log("🔍 Gemini 응답:", result);
+    const result = await claudeResponse.json();
+    console.log("🤖 Claude 응답:", result);
 
-    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "응답이 없습니다";
+    const text = result?.content?.[0]?.text || "프롬프트를 생성할 수 없습니다.";
 
-    // 예시: Clarifying Question을 포함하고 싶다면 여기서 파싱
     res.status(200).json({
-      clarifyingQuestion: "", // 향후 개선 가능
+      clarifyingQuestion: "",
       finalPrompt: text
     });
+
   } catch (error) {
-    console.error("❌ Gemini 호출 오류:", error);
-    res.status(500).json({ error: "Gemini API 호출 실패" });
+    console.error("❌ Claude API 오류:", error);
+    res.status(500).json({ 
+      clarifyingQuestion: "",
+      finalPrompt: "API 오류가 발생했습니다. ANTHROPIC_API_KEY를 확인해주세요." 
+    });
   }
 }
