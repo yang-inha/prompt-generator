@@ -108,7 +108,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       finalPrompt: text
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("❌ 예외 발생:", error);
     console.error("❌ 에러 메시지:", error.message);
     console.error("❌ 에러 스택:", error.stack);
